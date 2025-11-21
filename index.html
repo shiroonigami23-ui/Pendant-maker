@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>✨ Professional Pendant Designer 3D Pro ✨</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-container">
+        <header class="app-header">
+            <h1>💎 Professional Pendant Designer 3D Pro 💎</h1>
+            <p class="subtitle">Create Stunning, Photorealistic Custom Jewelry Designs</p>
+        </header>
+
+        <div class="main-content">
+            <!-- 3D Viewport -->
+            <div class="viewport-container">
+                <div id="canvas-container"></div>
+                <div class="viewport-controls">
+                    <button onclick="resetCamera()" class="control-btn">🎥 Reset View</button>
+                    <button onclick="toggleWingAnimation()" class="control-btn" id="wing-animation-btn">▶️ Animate Wings</button>
+                    <button onclick="toggleRotation()" class="control-btn" id="rotate-btn">⏸️ Pause Rotation</button>
+                    <button onclick="toggleGrid()" class="control-btn">📐 Toggle Grid</button>
+                    <button onclick="undo()" class="control-btn" id="undo-btn" disabled>↩️ Undo</button> 
+                    <button onclick="redo()" class="control-btn" id="redo-btn" disabled>↪️ Redo</button> 
+                    <button onclick="takeScreenshot()" class="control-btn">📸 Screenshot</button>
+                    
+                </div>
+            </div>
+
+            <!-- Control Panel -->
+            <div class="control-panel">
+                <div class="panel-header">
+                    <h2>🎨 Design Controls</h2>
+                </div>
+
+                <!-- Base Shape Section -->
+                <div class="control-section">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h3>🔷 Base Shape & Structure</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <label>Shape Type:</label>
+                        <div class="shape-grid">
+                            <label class="shape-option">
+                                <input type="radio" name="shape" value="circle" onchange="updateShape()" checked>
+                                <span>⭕ Circle</span>
+                            </label>
+                            <label class="shape-option">
+                                <input type="radio" name="shape" value="oval" onchange="updateShape()">
+                                <span>⬭ Oval</span>
+                            </label>
+                            <label class="shape-option">
+                                <input type="radio" name="shape" value="heart" onchange="updateShape()">
+                                <span>💗 Heart</span>
+                            </label>
+                            <label class="shape-option">
+                                <input type="radio" name="shape" value="teardrop" onchange="updateShape()">
+                                <span>💧 Teardrop</span>
+                            </label>
+                            <label class="shape-option">
+                                <input type="radio" name="shape" value="square" onchange="updateShape()">
+                                <span>⬜ Square</span>
+                            </label>
+                            <label class="shape-option">
+                                <input type="radio" name="shape" value="hexagon" onchange="updateShape()">
+                                <span>⬡ Hexagon</span>
+                            </label>
+                            <label class="shape-option">
+                                <input type="radio" name="shape" value="rhombus" onchange="updateShape()">
+                                <span>🔶 Rhombus</span>
+                            </label>
+                            <label class="shape-option">
+                                <input type="radio" name="shape" value="star" onchange="updateShape()">
+                                <span>⭐ Star</span>
+                            </label>
+                            <label class="shape-option">
+                                <input type="radio" name="shape" value="octagon" onchange="updateShape()">
+                                <span>🛑 Octagon</span>
+                            </label>
+                            <label class="shape-option">
+                                <input type="radio" name="shape" value="cross" onchange="updateShape()">
+                                <span>✟ Cross</span>
+                            </label>
+                            <label class="shape-option">
+                                <input type="radio" name="shape" value="shield" onchange="updateShape()">
+                                <span>🛡️ Shield</span>
+                            </label>
+                            <label class="shape-option">
+                                <input type="radio" name="shape" value="infinity" onchange="updateShape()">
+                                <span>∞ Infinity</span>
+                            </label>
+                            <label class="shape-option">
+                                <input type="radio" name="shape" value="locket" onchange="updateShape()">
+                                <span>🔒 Locket</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="control-section" id="locket-section" style="display: none;">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h3>🖼️ Locket Interior & Animation</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <button onclick="toggleLocketAnimation()" class="control-btn" style="width: 100%; margin-bottom: 15px;">
+                            Click to Open/Close Locket
+                        </button>
+                        
+                        <label>Open Angle: <span id="locket-angle-value">0°</span></label>
+                        <input type="range" id="locket-open-angle" min="0" max="180" step="5" value="0" oninput="updateLocketAngle()">
+
+                        <label>Lid Style:</label>
+                        <select id="locket-style" onchange="updateLocketStyle()">
+                            <option value="two-sided">Two-Sided (Left Lid Only)</option>
+                            <option value="three-sided">Three-Sided (Left & Right Lids)</option>
+                        </select>
+
+                        <hr style="border-color: var(--border-color); margin: 20px 0;">
+                        
+                        <h4>Photo Uploads (Inside)</h4>
+
+                        <label>Left Lid Photo:</label>
+                        <input type="file" id="locket-image-left" accept="image/*" onchange="handleImageUpload('left')">
+                        <img id="preview-left" style="max-width: 100%; height: auto; border-radius: 5px; margin-top: 5px;" src="" alt="Left Photo Preview">
+
+                        <label>Right Lid Photo:</label>
+                        <input type="file" id="locket-image-right" accept="image/*" onchange="handleImageUpload('right')">
+                        <img id="preview-right" style="max-width: 100%; height: auto; border-radius: 5px; margin-top: 5px;" src="" alt="Right Photo Preview">
+
+                        <label>Back Plate Photo:</label>
+                        <input type="file" id="locket-image-back" accept="image/*" onchange="handleImageUpload('back')">
+                        <img id="preview-back" style="max-width: 100%; height: auto; border-radius: 5px; margin-top: 5px;" src="" alt="Back Photo Preview">
+
+                    </div>
+                </div>
+                <!-- Wings Section -->
+                <div class="control-section">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h3>🦋 Wing Customization</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="add-wings" onchange="updateWings()" checked>
+                            <span>Add Wings</span>
+                        </label>
+
+                        <div id="wing-controls">
+                            <label>Wing Style:</label>
+                            <select id="wing-style" onchange="updateWings()">
+                                <option value="dual-symmetrical">Dual Symmetric Wings</option>
+                                <option value="single-left">Single Left Wing</option>
+                                <option value="single-right">Single Right Wing</option>
+                                <option value="dual-asymmetrical">Dual Asymmetric Wings</option>
+                                <option value="angel">Angel Wings (Feathered)</option>
+                                <option value="bird">Bird Wings (Sharp)</option>
+                                <option value="ornate">Ornate Wings</option>
+                                <option value="butterfly">Butterfly Wings</option>
+                                <option value="dragon">Dragon Wings</option>
+                            </select>
+
+                            <label>Wing Surface:</label>
+                            <select id="wing-surface" onchange="updateWings()">
+                                <option value="smooth">Smooth</option>
+                                <option value="feathered">Feathered</option>
+                                <option value="ornate">Ornate</option>
+                                <option value="geometric">Geometric</option>
+                                <option value="pave-diamonds">Pavé Diamonds</option>
+                                <option value="textured">Textured</option>
+                                <option value="crystal">Crystal</option>
+                            </select>
+
+                            <label>Wing Size: <span id="wing-size-value">1.0x</span></label>
+                            <input type="range" id="wing-size" min="0.5" max="2.5" step="0.1" value="1.0" oninput="updateWingSize()">
+
+                            <label>Wing Angle: <span id="wing-angle-value">30°</span></label>
+                            <input type="range" id="wing-angle" min="-45" max="45" step="5" value="30" oninput="updateWingAngle()">
+
+                            <label>Vertical Offset: <span id="wing-offset-y-value">0</span></label>
+                            <input type="range" id="wing-offset-y" min="-10" max="10" step="1" value="0" oninput="updateWingOffset()">
+
+                            <label>Horizontal Offset: <span id="wing-offset-x-value">0</span></label>
+                            <input type="range" id="wing-offset-x" min="-10" max="10" step="1" value="0" oninput="updateWingOffset()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Dimensions Section -->
+               <div class="control-section">
+    <div class="section-header" onclick="toggleSection(this)">
+        <h3>📏 Dimensions & Size</h3>
+        <span class="toggle-icon">▼</span>
+    </div>
+                   <div class="section-content">
+            <hr style="border-color: var(--border-color); margin: 20px 0;">
+            <h4>Live Total Dimensions</h4>
+            <p>Total Width: <span id="total-width-value">--</span></p>
+            <p>Total Height: <span id="total-height-value">--</span></p>
+            <p>Total Depth: <span id="total-depth-value">--</span></p>
+            <hr style="border-color: var(--border-color); margin: 20px 0;">
+            </div>
+        <div class="section-content">
+        <label>Unit System:</label>
+        <select id="unit-system" onchange="updateUnitSystem()">
+            <option value="mm">Millimeters (mm)</option>
+            <option value="cm">Centimeters (cm)</option>
+            <option value="in">Inches (in)</option>
+        </select>
+        <label>Width: <span id="pendant-width-value">25mm</span></label>
+        <input type="range" id="pendant-width" min="10" max="60" step="1" value="25" oninput="updateDimensions()">
+
+        <label>Height: <span id="pendant-height-value">30mm</span></label>
+        <input type="range" id="pendant-height" min="10" max="60" step="1" value="30" oninput="updateDimensions()">
+
+        <label>Thickness: <span id="thickness-value">3mm</span></label>
+        <input type="range" id="thickness" min="1" max="8" step="0.5" value="3" oninput="updateDimensions()">
+
+        <label>Edge Bevel: <span id="bevel-value">0.1mm</span></label>
+        <input type="range" id="bevel-size" min="0" max="0.5" step="0.05" value="0.1" oninput="updateBevel()">
+    </div>
+</div>
+
+
+                <!-- Material & Finish Section -->
+                <div class="control-section">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h3>✨ Material & Finish</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="use-layered-color" onchange="updateMaterial()">
+                            <span>Use Custom/Layered Colors</span>
+                        </label>
+
+                        <div id="standard-material-controls">
+                            <label>Material:</label>
+                            <div class="material-grid">
+                                <label class="material-option">
+                                    <input type="radio" name="material" value="silver" onchange="updateMaterial()">
+                                    <span>🥈 Silver</span>
+                                </label>
+                                <label class="material-option">
+                                    <input type="radio" name="material" value="gold" onchange="updateMaterial()">
+                                    <span>🥇 Gold</span>
+                                </label>
+                                <label class="material-option">
+                                    <input type="radio" name="material" value="rose-gold" onchange="updateMaterial()">
+                                    <span>🌹 Rose Gold</span>
+                                </label>
+                                <label class="material-option">
+                                    <input type="radio" name="material" value="platinum" onchange="updateMaterial()" checked>
+                                    <span>💿 Platinum</span>
+                                </label>
+                                <label class="material-option">
+                                    <input type="radio" name="material" value="copper" onchange="updateMaterial()">
+                                    <span>🟠 Copper</span>
+                                </label>
+                                <label class="material-option">
+                                    <input type="radio" name="material" value="titanium" onchange="updateMaterial()">
+                                    <span>⚙️ Titanium</span>
+                                </label>
+                                <label class="material-option">
+                                    <input type="radio" name="material" value="white-gold" onchange="updateMaterial()">
+                                    <span>⚪ White Gold</span>
+                                </label>
+                                <label class="material-option">
+                                    <input type="radio" name="material" value="bronze" onchange="updateMaterial()">
+                                    <span>🟤 Bronze</span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div id="layered-color-controls" style="display: none;">
+                            <label>Base Color (Pendant):</label>
+                            <input type="color" id="color-base" value="#D3D3D3" onchange="updateMaterial()">
+
+                            <label>Wing/Border Color:</label>
+                            <input type="color" id="color-layer1" value="#C0C0C0" onchange="updateMaterial()">
+
+                            <label>Bail/Accent Color:</label>
+                            <input type="color" id="color-layer2" value="#D3D3D3" onchange="updateMaterial()">
+                        </div>
+
+                        <label>Glossiness/Polish: <span id="glossiness-value">80%</span></label>
+                        <input type="range" id="glossiness" min="0" max="100" step="5" value="80" oninput="updateGlossiness()">
+
+                        <label>Metallic Intensity: <span id="metallic-value">100%</span></label>
+                        <input type="range" id="metallic" min="0" max="100" step="5" value="100" oninput="updateMetallic()">
+
+                        <label>Reflectivity: <span id="reflectivity-value">1.5x</span></label>
+                        <input type="range" id="reflectivity" min="0.5" max="3" step="0.1" value="1.5" oninput="updateReflectivity()">
+                        
+                        <label>Anisotropy (Directional Polish): <span id="anisotropy-value">0.0</span></label>
+                        <input type="range" id="anisotropy" min="0.0" max="1.0" step="0.1" value="0.0" oninput="updateAnisotropy()">
+
+                        <label>Clearcoat (Protective Varnish): <span id="clearcoat-value">0.0</span></label>
+                        <input type="range" id="clearcoat" min="0.0" max="1.0" step="0.1" value="0.0" oninput="updateClearcoat()">
+                    </div>
+                </div>
+
+                <!-- Gemstone Section -->
+                <div class="control-section">
+    <div class="section-header" onclick="toggleSection(this)">
+        <h3>💎 Gemstone Customization</h3>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="section-content">
+        <label class="checkbox-label">
+            <input type="checkbox" id="add-gem" onchange="updateGemstone()">
+            <span>Add Gemstone</span>
+        </label>
+
+        <div id="gem-controls" style="display: none;">
+            <label>Gem Shape:</label>
+            <select id="gem-shape" onchange="updateGemstone()">
+                <option value="round">Round Brilliant</option>
+                <option value="heart">Heart Cut</option>
+                <option value="oval">Oval Cut</option>
+                <option value="cushion">Cushion Cut</option>
+                <option value="emerald">Emerald Cut</option>
+                <option value="princess">Princess Cut</option>
+                <option value="pear">Pear Cut</option>
+                <option value="marquise">Marquise Cut</option>
+                <option value="asscher">Asscher Cut</option>
+                <option value="radiant">Radiant Cut</option>
+            </select>
+
+            <label>Gem Color:</label>
+            <input type="color" id="gem-color" value="#ff0000" onchange="updateGemstone()">
+
+            <label>Gem Type/Preset:</label>
+            <select id="gem-type" onchange="setGemPreset()">
+                <option value="custom">Custom Color</option>
+                <option value="diamond">💎 Diamond</option>
+                <option value="ruby">❤️ Ruby</option>
+                <option value="sapphire">💙 Sapphire</option>
+                <option value="emerald">💚 Emerald</option>
+                <option value="amethyst">💜 Amethyst</option>
+                <option value="topaz">🟡 Topaz</option>
+                <option value="aquamarine">🩵 Aquamarine</option>
+                <option value="opal">🌈 Opal</option>
+                <option value="pearl">🤍 Pearl</option>
+            </select>
+
+            <label>Gem Size: <span id="gem-size-value">3mm</span></label>
+            <input type="range" id="gem-size" min="1" max="15" step="0.5" value="3" oninput="updateGemSize()">
+
+            <label>Gem Height/Depth: <span id="gem-depth-value">1.5mm</span></label>
+            <input type="range" id="gem-depth" min="0.5" max="5" step="0.1" value="1.5" oninput="updateGemDepth()">
+
+            <hr style="border-color: var(--border-color); margin: 20px 0;">
+
+            <h4>Gemstone Setting</h4>
+            <label>Setting Style:</label>
+            <select id="setting-style" onchange="updateSettingStyle()">
+                <option value="4-prong">4-Prong</option>
+                <option value="6-prong">6-Prong</option>
+                <option value="bezel">Full Bezel</option>
+                <option value="minimal">Minimal Basket</option>
+            </select>
+
+            <label>Prong/Bezel Thickness: <span id="prong-thickness-value">0.5mm</span></label>
+            <input type="range" id="prong-thickness" min="0.2" max="1.0" step="0.05" value="0.5" oninput="updateProngThickness()">
+            
+            <hr style="border-color: var(--border-color); margin: 20px 0;">
+
+            <label>Facet Count: <span id="gem-facets-value">24</span></label>
+            <input type="range" id="gem-facets" min="8" max="48" step="4" value="24" oninput="updateGemFacets()">
+
+            <label>Brilliance/Sparkle: <span id="gem-sparkle-value">2.5x</span></label>
+            <input type="range" id="gem-sparkle" min="1" max="5" step="0.1" value="2.5" oninput="updateGemSparkle()">
+
+            <label>Transparency: <span id="gem-opacity-value">75%</span></label>
+            <input type="range" id="gem-opacity" min="10" max="100" step="5" value="75" oninput="updateGemOpacity()">
+
+            <label class="checkbox-label">
+                <input type="checkbox" id="gem-iridescence" onchange="updateGemIridescence()">
+                <span>Add Iridescence/Rainbow Effect</span>
+            </label>
+        </div>
+    </div>
+</div>
+
+
+                <div class="control-section">
+    <div class="section-header" onclick="toggleSection(this)">
+        <h3>🔍 Scale Comparison</h3>
+        <span class="toggle-icon">▼</span>
+    </div>
+    <div class="section-content">
+        <label>Reference Object:</label>
+        <select id="reference-object" onchange="updateReferenceObject()">
+            <option value="none">None</option>
+            <option value="coin">Coin (e.g., Quarter)</option>
+            <option value="ring">Finger Ring</option>
+        </select>
+        
+        <label>Reference Size (Diameter/Width): <span id="reference-size-value">25.0mm</span></label>
+        <input type="range" id="reference-size" min="10" max="40" step="0.5" value="25.0" oninput="updateReferenceSize()">
+        
+        <p style="font-size: 0.8em; opacity: 0.7; margin-top: 10px;">
+            *The 3D object is placed behind the pendant to visualize real-world scale.
+        </p>
+    </div>
+</div>
+
+                <!-- Border & Frame Section -->
+                <div class="control-section">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h3>🖼️ Border & Frame</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="add-border" onchange="updateBorder()">
+                            <span>Add Border/Frame</span>
+                        </label>
+
+                        <div id="border-controls" style="display: none;">
+                            <label>Border Style:</label>
+                            <select id="border-style" onchange="updateBorder()">
+                                <option value="simple">Simple Ring</option>
+                                <option value="beaded">Beaded</option>
+                                <option value="ornate">Ornate</option>
+                                <option value="rope">Rope Pattern</option>
+                                <option value="twisted">Twisted</option>
+                                <option value="crown">Crown Style</option>
+                                <option value="pave">Pavé Setting</option>
+                            </select>
+
+                            <label>Border Width: <span id="border-width-value">0.15mm</span></label>
+                            <input type="range" id="border-width" min="0.05" max="0.5" step="0.05" value="0.15" oninput="updateBorderWidth()">
+
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="border-gems" onchange="updateBorderGems()">
+                                <span>Add Small Gems to Border</span>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bail Section -->
+                <div class="control-section">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h3>🔗 Bail/Loop Attachment</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="add-bail" onchange="updateBail()" checked>
+                            <span>Add Bail Loop</span>
+                        </label>
+
+                        <div id="bail-controls">
+                            <label>Bail Style:</label>
+                            <select id="bail-style" onchange="updateBail()">
+                                <option value="simple">Simple Ring</option>
+                                <option value="ornate">Ornate Loop</option>
+                                <option value="heart">Heart Shape</option>
+                                <option value="decorative">Decorative</option>
+                                <option value="integrated-gem-loop">Integrated Gem Loop</option>
+                                <option value="hidden">Hidden Bail</option>
+                            </select>
+
+                            <label>Bail Size: <span id="bail-size-value">0.8mm</span></label>
+                            <input type="range" id="bail-size" min="0.4" max="1.5" step="0.1" value="0.8" oninput="updateBailSize()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Engraving Section -->
+                <div class="control-section">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h3>✍️ Text Engraving</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="add-engraving" onchange="updateEngraving()">
+                            <span>Add Text Engraving</span>
+                        </label>
+
+                        <div id="engraving-controls" style="display: none;">
+                            <label>Engraving Text:</label>
+                            <input type="text" id="engraving-text" maxlength="30" placeholder="Enter text..." oninput="updateEngraving()">
+
+                            <label>Font Size: <span id="font-size-value">12pt</span></label>
+                            <input type="range" id="font-size" min="6" max="24" step="1" value="12" oninput="updateFontSize()">
+
+                            <label>Font Style:</label>
+                            <select id="font-style" onchange="updateFontStyle()">
+                                <option value="arial">Arial</option>
+                                <option value="serif">Serif</option>
+                                <option value="script">Script</option>
+                                <option value="gothic">Gothic</option>
+                            </select>
+
+                            <label>Engraving Depth: <span id="engrave-depth-value">0.1mm</span></label>
+                            <input type="range" id="engrave-depth" min="0.05" max="0.3" step="0.05" value="0.1" oninput="updateEngraveDepth()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Overlay/Accent Section -->
+                <div class="control-section">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h3>🎀 Overlay & Accents</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="add-overlay" onchange="updateOverlay()">
+                            <span>Add Decorative Overlay</span>
+                        </label>
+
+                        <div id="overlay-controls" style="display: none;">
+                            <label>Overlay Type:</label>
+                            <select id="overlay-type" onchange="updateOverlay()">
+                                <option value="cross">✟ Cross</option>
+                                <option value="floral">🌸 Floral Pattern</option>
+                                <option value="celtic">☘️ Celtic Knot</option>
+                                <option value="filigree">🕸️ Filigree</option>
+                                <option value="geometric">◇ Geometric</option>
+                            </select>
+                            <label>Overlay Color:</label>
+                            <input type="color" id="overlay-color" value="#FFFFFF" onchange="updateOverlayColor()">
+                            <label>Overlay Size: <span id="overlay-size-value">1.0x</span></label>
+                            <input type="range" id="overlay-size" min="0.5" max="2" step="0.1" value="1.0" oninput="updateOverlaySize()">
+                        </div>
+
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="add-crystals" onchange="updateCrystals()">
+                            <span>Add Crystal/Marine Effects</span>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Chain Section -->
+                <div class="control-section">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h3>⛓️ Chain Design</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="add-chain" onchange="updateChain()" checked>
+                            <span>Show Chain</span>
+                        </label>
+
+                        <div id="chain-controls">
+                            <label>Chain Style:</label>
+                            <select id="chain-style" onchange="updateChain()">
+                                <option value="simple-cable">Simple Cable</option>
+                                <option value="box">Box Chain</option>
+                                <option value="curb">Curb Chain</option>
+                                <option value="rope">Rope Chain</option>
+                                <option value="figaro">Figaro Chain</option>
+                                <option value="wheat">Wheat Chain</option>
+                                <option value="snake">Snake Chain</option>
+                                <option value="ball">Ball Chain</option>
+                            </select>
+                            <label>Chain Color:</label>
+                            <input type="color" id="chain-color" value="#D3D3D3" onchange="updateChainColor()">
+                            <label>Chain Length: <span id="chain-length-value">50cm</span></label>
+                            <input type="range" id="chain-length" min="30" max="90" step="5" value="50" oninput="updateChainLength()">
+
+                            <label>Link Thickness: <span id="chain-link-thickness-value">0.8mm</span></label>
+                            <input type="range" id="chain-link-thickness" min="0.3" max="2" step="0.1" value="0.8" oninput="updateChainThickness()">
+                            
+                            <label>Drape/Sag Depth: <span id="chain-sag-depth-value">15%</span></label>
+                            <input type="range" id="chain-sag-depth" min="5" max="35" step="5" value="15" oninput="updateChainSagDepth()">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lighting & Effects -->
+                <div class="control-section">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h3>💡 Lighting & Effects</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <label>Ambient Light: <span id="ambient-light-value">0.5</span></label>
+                        <input type="range" id="ambient-light" min="0" max="1" step="0.1" value="0.5" oninput="updateLighting()">
+
+                        <label>Directional Light: <span id="direct-light-value">0.8</span></label>
+                        <input type="range" id="direct-light" min="0" max="2" step="0.1" value="0.8" oninput="updateLighting()">
+
+                        <label>Environment Intensity: <span id="env-intensity-value">1.0</span></label>
+                        <input type="range" id="env-intensity" min="0" max="3" step="0.1" value="1.0" oninput="updateEnvironment()">
+
+                        <label>Shadow Intensity: <span id="shadow-value">100%</span></label>
+                        <input type="range" id="shadow-intensity" min="0" max="100" step="10" value="100" oninput="updateShadows()">
+
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="bloom-effect" onchange="updateBloom()">
+                            <span>Add Bloom/Glow Effect</span>
+                        </label>
+                        
+                        <div id="bloom-controls">
+                            <label>Glow Strength: <span id="bloom-strength-value">0.5</span></label>
+                            <input type="range" id="bloom-strength" min="0.1" max="5.0" step="0.1" value="0.5" oninput="updateBloomParams()">
+
+                            <label>Glow Threshold (Detail): <span id="bloom-threshold-value">0.80</span></label>
+                            <input type="range" id="bloom-threshold" min="0.0" max="1.0" step="0.05" value="0.8" oninput="updateBloomParams()">
+                            
+                            <label>Glow Radius (Spread): <span id="bloom-radius-value">0.2</span></label>
+                            <input type="range" id="bloom-radius" min="0.0" max="1.0" step="0.1" value="0.2" ononinput="updateBloomParams()">
+                        </div>  
+                    </div>
+                </div>
+                
+                <!-- Export Options -->
+                <div class="control-section">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h3>💾 Export & Save</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content export-section">
+                        <button onclick="exportSTL()" class="export-btn">📥 Export 3D Model (.STL)</button>
+                        <button onclick="exportOBJ()" class="export-btn">📦 Export as OBJ</button>
+                        <button onclick="exportGLTF()" class="export-btn">🎯 Export as GLTF</button>
+                        <button onclick="exportPNG()" class="export-btn">📷 Export Image (PNG)</button>
+                        <button onclick="exportJSON()" class="export-btn">📄 Export Specifications</button>
+                        <button onclick="saveDesign()" class="export-btn">💾 Save Design</button>
+                        <button onclick="loadDesign()" class="export-btn">📂 Load Design</button>
+                        <button onclick="resetToDefault()" class="export-btn reset-btn">🔄 Reset to Default</button>
+                    </div>
+                </div>
+
+                <!-- Preset Templates -->
+                <div class="control-section">
+                    <div class="section-header" onclick="toggleSection(this)">
+                        <h3>🎁 Preset Templates</h3>
+                        <span class="toggle-icon">▼</span>
+                    </div>
+                    <div class="section-content">
+                        <button onclick="loadPreset('angel-heart')" class="preset-btn">😇 Angel Heart</button>
+                        <button onclick="loadPreset('crystal-wings')" class="preset-btn">🦋 Crystal Wings</button>
+                        <button onclick="loadPreset('royal-gem')" class="preset-btn">👑 Royal Gemstone</button>
+                        <button onclick="loadPreset('celtic-cross')" class="preset-btn">☘️ Celtic Cross</button>
+                        <button onclick="loadPreset('dragon-pendant')" class="preset-btn">🐉 Dragon Pendant</button>
+                        <button onclick="loadPreset('vintage-locket')" class="preset-btn">📿 Vintage Locket</button>
+                        <button onclick="loadPreset('angel-cross-base')" class="preset-btn">💙 Angel Cross Base</button>
+                        <button onclick="loadPreset('celestial-secret')" class="preset-btn">🌌 Celestial Secret</button>
+                        <button onclick="loadPreset('ocean-tide')" class="preset-btn" style="background: linear-gradient(135deg, #1d4ed8, #0ea5e9);">🌊 Ocean Tide</button>
+                        <button onclick="loadPreset('gothic-key')" class="preset-btn" style="background: linear-gradient(135deg, #44403c, #78716c);">🗝️ Gothic Key</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Messages -->
+        <div id="status-message" class="status-message"></div>
+
+        <!-- Help/Info Panel -->
+        <div class="info-panel">
+            <h4>🎮 Controls</h4>
+            <p>🖱️ <strong>Left Click + Drag:</strong> Rotate View</p>
+            <p>🔍 <strong>Scroll:</strong> Zoom In/Out</p>
+            <p>👆 <strong>Touch:</strong> Pinch to Zoom, Drag to Rotate</p>
+            <p>⚙️ <strong>Tip:</strong> All settings auto-save!</p>
+        </div>
+    </div>
+
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+    <script type="module" src="core.js"></script>
+    <script type="module" src="geometry.js"></script>
+    <script type="module" src="materials.js"></script>
+    <script type="module" src="ui-controls.js"></script>
+    <script type="module" src="presets.js"></script>
+    <script type="module" src="export-utils.js"></script>
+</body>
+</html>
