@@ -920,7 +920,7 @@
               />
               <label class="checkbox-label">
                 <input type="checkbox" id="bloom-effect" data-onchange="updateBloom()" />
-                <span>Add Bloom/Glow Effect</span>
+                <span>Enable Bloom (Glow)</span>
               </label>
               <div id="bloom-controls">
                 <label>Glow Strength: <span id="bloom-strength-value">0.5</span></label>
@@ -933,7 +933,7 @@
                   value="0.5"
                   data-oninput="updateBloomParams()"
                 />
-                <label>Glow Threshold (Detail): <span id="bloom-threshold-value">0.80</span></label>
+                <label>Glow Threshold: <span id="bloom-threshold-value">0.80</span></label>
                 <input
                   type="range"
                   id="bloom-threshold"
@@ -943,7 +943,7 @@
                   value="0.8"
                   data-oninput="updateBloomParams()"
                 />
-                <label>Glow Radius (Spread): <span id="bloom-radius-value">0.2</span></label>
+                <label>Glow Radius: <span id="bloom-radius-value">0.2</span></label>
                 <input
                   type="range"
                   id="bloom-radius"
@@ -963,11 +963,11 @@
               <span class="toggle-icon"></span>
             </div>
             <div class="section-content export-section">
-              <button data-onclick="exportSTL()" class="export-btn">Export 3D Model (.STL)</button>
-              <button data-onclick="exportOBJ()" class="export-btn">Export as OBJ</button>
-              <button data-onclick="exportGLTF()" class="export-btn">Export as GLTF</button>
-              <button data-onclick="exportPNG()" class="export-btn">Export Image (PNG)</button>
-              <button data-onclick="exportJSON()" class="export-btn">Export Specifications</button>
+              <button data-onclick="exportSTL()" class="export-btn">Export STL (3D Model)</button>
+              <button data-onclick="exportOBJ()" class="export-btn">Export OBJ</button>
+              <button data-onclick="exportGLTF()" class="export-btn">Export GLTF</button>
+              <button data-onclick="exportPNG()" class="export-btn">Export PNG (Image)</button>
+              <button data-onclick="exportJSON()" class="export-btn">Export JSON (Spec)</button>
               <button data-onclick="saveDesign()" class="export-btn">Save Design</button>
               <button data-onclick="loadDesign()" class="export-btn">Load Design</button>
               <button data-onclick="resetToDefault()" class="export-btn reset-btn">
