@@ -250,14 +250,15 @@ function createHighContrastCubemap() {
     // Simple procedural generation for the faces
     const createFaceData = (colorHex) => {
         const color = new THREE.Color(colorHex);
-        const data = new Uint8Array(size * size * 3);
+        const data = new Uint8Array(size * size * 4);
 
         for (let i = 0; i < size * size; i++) {
-            data[i * 3 + 0] = color.r * 255;
-            data[i * 3 + 1] = color.g * 255;
-            data[i * 3 + 2] = color.b * 255;
+            data[i * 4 + 0] = color.r * 255;
+            data[i * 4 + 1] = color.g * 255;
+            data[i * 4 + 2] = color.b * 255;
+            data[i * 4 + 3] = 255;
         }
-        return new THREE.DataTexture(data, size, size, THREE.RGBFormat);
+        return new THREE.DataTexture(data, size, size);
     };
 
     // Use a high-contrast pattern for maximum shine: Bright Front/Top, Dark Sides
