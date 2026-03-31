@@ -8,6 +8,7 @@ import {
   loadProjects,
   makeReadonlyShareLink,
   parseReadonlyConfig,
+  shareReviewLink,
   saveProjectVersion,
   validateManufacturing
 } from './pro-utils.js';
@@ -388,6 +389,10 @@ async function exportPdfReport() {
 
 async function copyReviewLink() {
   const url = makeReadonlyShareLink(currentConfig);
+  if (shareReviewLink(url)) {
+    showStatus('Review link opened in native share sheet', 'success');
+    return;
+  }
   await navigator.clipboard.writeText(url);
   showStatus('Review link copied', 'success');
 }

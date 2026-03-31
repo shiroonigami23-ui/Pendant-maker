@@ -6,6 +6,10 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
+    "build:web": "vite build",
+    "android:sync": "node scripts/sync-android-assets.mjs",
+    "android:prep": "npm run build:web && npm run android:sync",
+    "android:release": "npm run android:prep && android-app\\gradlew.bat -p android-app assembleRelease",
     "preview": "vite preview --port 4173",
     "lint": "eslint .",
     "test": "vitest run"

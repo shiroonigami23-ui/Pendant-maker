@@ -4,6 +4,7 @@ import './materials.js';
 import './ui-controls.js';
 import './presets.js';
 import './export-utils.js';
+import './native-bridge.js';
 import { bindDataEvents } from './app-bootstrap.js';
 import { initWorkbench } from './pro-workbench.js';
 

@@ -1,0 +1,55 @@
+plugins {
+  id 'com.android.application'
+}
+
+import java.util.Properties
+
+def keystorePropertiesFile = rootProject.file("keystore.properties")
+def keystoreProperties = new Properties()
+if (keystorePropertiesFile.exists()) {
+  keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
+android {
+  namespace 'com.pendantmaker.app'
+  compileSdk 35
+
+  defaultConfig {
+    applicationId "com.pendantmaker.app"
+    minSdk 24
+    targetSdk 35
+    versionCode 1
+    versionName "1.0.0"
+  }
+
+  signingConfigs {
+    if (keystorePropertiesFile.exists()) {
+      release {
+        storeFile rootProject.file(keystoreProperties['storeFile'])
+        storePassword keystoreProperties['storePassword']
+        keyAlias keystoreProperties['keyAlias']
+        keyPassword keystoreProperties['keyPassword']
+      }
+    }
+  }
+
+  buildTypes {
+    release {
+      minifyEnabled true
+      shrinkResources true
+      proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+      signingConfig keystorePropertiesFile.exists() ? signingConfigs.release : signingConfigs.debug
+    }
+  }
+
+  compileOptions {
+    sourceCompatibility JavaVersion.VERSION_17
+    targetCompatibility JavaVersion.VERSION_17
+  }
+}
+
+dependencies {
+  implementation 'androidx.appcompat:appcompat:1.7.0'
+  implementation 'com.google.android.material:material:1.12.0'
+  implementation 'androidx.webkit:webkit:1.11.0'
+}

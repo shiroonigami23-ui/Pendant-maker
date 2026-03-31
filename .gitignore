@@ -2,3 +2,10 @@
 dist/
 .vite/
 coverage/
+app/build/
+android-app/.gradle/
+android-app/local.properties
+android-app/keystore.properties
+android-app/keystore/
+android-app/app/build/
+android-app/build/

@@ -1,38 +1,54 @@
-﻿# Professional Pendant Designer 3D
+﻿# Pendant Maker
 
-A production-focused pendant design tool with guided workflow, manufacturing validation, business estimation, and export utilities.
+[![CI](https://github.com/shiroonigami23-ui/Pendant-maker/actions/workflows/ci.yml/badge.svg)](https://github.com/shiroonigami23-ui/Pendant-maker/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/shiroonigami23-ui/Pendant-maker)](https://github.com/shiroonigami23-ui/Pendant-maker/releases)
+[![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
+[![Platform](https://img.shields.io/badge/platform-Web%20%2B%20Android-blue)](https://github.com/shiroonigami23-ui/Pendant-maker)
 
-## Live local development
+Production-focused 3D pendant design tool with guided workflow, manufacturing validation, business estimation, export utilities, and a Java-powered Android app release.
+
+## Features
+
+- Guided workflow: Shape -> Material -> Gem -> Engraving -> Export.
+- Real-time manufacturability checks and print profile constraints.
+- Business tooling: cost estimate, BOM CSV export, and review link sharing.
+- PDF report export for production handoff.
+- Java-native Android bridge for:
+  - manufacturing validation,
+  - pricing estimation,
+  - native share sheet integration.
+
+## Web development
 
 ```bash
 npm install
 npm run dev -- --host 0.0.0.0 --port 5173
 ```
 
-Open: `http://localhost:5173`
+Open `http://localhost:5173`.
 
-## Major upgrades in this version
+## Android release build (Java)
 
-- UTF-8 and copy cleanup baseline.
-- Inline event handlers replaced by event-driven bootstrap (`data-on*` binding).
-- Vite + ESLint + Prettier + Vitest + GitHub CI.
-- Guided wizard flow: Shape -> Material -> Gem -> Engraving -> Export.
-- Progressive disclosure: Basic/Advanced UX mode.
-- Real-time manufacturing constraints and print profile checks.
-- Saveable named projects with version history.
-- PDF manufacturing report export.
-- Cost estimator + BOM CSV export.
-- Read-only share link mode for reviews.
-- Performance mode + exposure/environment controls.
-- Preset marketplace structure (starter cards).
+1. Build web assets and sync them into Android assets:
 
-## Key files
+```bash
+npm run android:prep
+```
 
-- `main.js` - entrypoint and module bootstrap
-- `app-bootstrap.js` - declarative event binding layer
-- `pro-workbench.js` - wizard, validation, business tools, versioning
-- `pro-utils.js` - validation/cost/share/BOM utilities
-- `core.js`, `geometry.js`, `ui-controls.js` - existing rendering and modeling engine
+2. Configure release signing:
+
+```bash
+copy android-app\keystore.properties.example android-app\keystore.properties
+```
+
+3. Generate signed release APK:
+
+```bash
+android-app\gradlew.bat -p android-app assembleRelease
+```
+
+APK output:
+`android-app/app/build/outputs/apk/release/app-release.apk`
 
 ## Quality commands
 
@@ -40,7 +56,14 @@ Open: `http://localhost:5173`
 - `npm run test`
 - `npm run build`
 
-## Notes
+## Project structure
 
-- Existing engine APIs are preserved to avoid regressions.
-- Workbench is layered on top, so further refactoring can proceed incrementally.
+- `main.js` - app entrypoint/module bootstrap
+- `native-bridge.js` - Java bridge integration for Android WebView
+- `pro-workbench.js` - workflow, validation, and business panel
+- `pro-utils.js` - validation, pricing, BOM, share utilities
+- `android-app/` - Java Android app and release build config
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](./LICENSE).

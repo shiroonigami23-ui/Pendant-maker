@@ -1,4 +1,15 @@
-﻿export function validateManufacturing(config) {
+﻿import { callNativeJson, shareTextNative } from './native-bridge.js';
+
+export function validateManufacturing(config) {
+  const native = callNativeJson('validateManufacturing', config);
+  if (native && Array.isArray(native.issues) && Array.isArray(native.warnings)) {
+    return {
+      pass: Boolean(native.pass),
+      issues: native.issues,
+      warnings: native.warnings
+    };
+  }
+
   const issues = [];
   const warnings = [];
 
@@ -64,6 +75,11 @@ export function getPrintProfiles() {
 }
 
 export function estimateCost(config) {
+  const native = callNativeJson('estimateCost', config);
+  if (native && typeof native.totalUsd === 'number') {
+    return native;
+  }
+
   const densityByMaterial = {
     silver: 10.49,
     gold: 19.32,
@@ -151,6 +167,10 @@ export function makeReadonlyShareLink(config) {
   const url = new URL(window.location.href);
   url.searchParams.set('review', encoded);
   return url.toString();
+}
+
+export function shareReviewLink(url) {
+  return shareTextNative(url);
 }
 
 export function parseReadonlyConfig() {
