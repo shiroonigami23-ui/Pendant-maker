@@ -1,4 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Pendant Maker</string>
+    <string name="title_native_designer">Pendant Maker Native Java</string>
+    <string name="subtitle_native_designer">Android release now runs Java-native designer logic, validation, and pricing.</string>
+    <string name="label_material">Material</string>
+    <string name="hint_width">Width (mm)</string>
+    <string name="hint_height">Height (mm)</string>
+    <string name="hint_thickness">Thickness (mm)</string>
+    <string name="hint_bevel">Bevel size (mm)</string>
+    <string name="label_has_gem">Has gem</string>
+    <string name="hint_gem_size">Gem size (mm)</string>
+    <string name="hint_gem_facets">Gem facets</string>
+    <string name="label_has_engraving">Has engraving</string>
+    <string name="hint_engraving">Engraving text</string>
+    <string name="hint_engraving_depth">Engraving depth (mm)</string>
+    <string name="label_has_border">Has border finish</string>
+    <string name="label_has_chain">Has chain</string>
+    <string name="hint_chain_thickness">Chain link thickness (mm)</string>
+    <string name="action_validate">Validate</string>
+    <string name="action_estimate">Estimate Cost</string>
+    <string name="action_share">Share Summary</string>
+    <string name="label_validation_result">Validation Result</string>
+    <string name="label_cost_result">Cost Result</string>
+    <string name="value_not_run">Not run yet.</string>
+    <string name="share_title">Share design summary</string>
+
+    <string-array name="material_options">
+        <item>silver</item>
+        <item>gold</item>
+        <item>rose-gold</item>
+        <item>platinum</item>
+        <item>white-gold</item>
+        <item>titanium</item>
+        <item>copper</item>
+        <item>bronze</item>
+    </string-array>
 </resources>

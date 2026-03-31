@@ -1,10 +1,196 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fillViewport="true">
 
-    <WebView
-        android:id="@+id/designerWebView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</FrameLayout>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/title_native_designer"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:text="@string/subtitle_native_designer" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:text="@string/label_material" />
+
+        <Spinner
+            android:id="@+id/materialSpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <EditText
+            android:id="@+id/widthInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:hint="@string/hint_width"
+            android:inputType="numberDecimal"
+            android:text="30" />
+
+        <EditText
+            android:id="@+id/heightInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_height"
+            android:inputType="numberDecimal"
+            android:text="30" />
+
+        <EditText
+            android:id="@+id/thicknessInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_thickness"
+            android:inputType="numberDecimal"
+            android:text="2.0" />
+
+        <EditText
+            android:id="@+id/bevelInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_bevel"
+            android:inputType="numberDecimal"
+            android:text="0.3" />
+
+        <Switch
+            android:id="@+id/hasGemSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/label_has_gem" />
+
+        <EditText
+            android:id="@+id/gemSizeInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_gem_size"
+            android:inputType="numberDecimal"
+            android:text="5.0" />
+
+        <EditText
+            android:id="@+id/gemFacetsInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_gem_facets"
+            android:inputType="numberDecimal"
+            android:text="16" />
+
+        <Switch
+            android:id="@+id/hasEngravingSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/label_has_engraving" />
+
+        <EditText
+            android:id="@+id/engravingInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_engraving"
+            android:inputType="text"
+            android:text="" />
+
+        <EditText
+            android:id="@+id/engravingDepthInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_engraving_depth"
+            android:inputType="numberDecimal"
+            android:text="0.1" />
+
+        <Switch
+            android:id="@+id/hasBorderSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="@string/label_has_border" />
+
+        <Switch
+            android:id="@+id/hasChainSwitch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/label_has_chain" />
+
+        <EditText
+            android:id="@+id/chainThicknessInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/hint_chain_thickness"
+            android:inputType="numberDecimal"
+            android:text="0.7" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/validateButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/action_validate" />
+
+            <Button
+                android:id="@+id/estimateButton"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_weight="1"
+                android:text="@string/action_estimate" />
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/shareButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/action_share" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/label_validation_result"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/validationResultText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="100dp"
+            android:paddingTop="6dp"
+            android:text="@string/value_not_run" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="@string/label_cost_result"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/costResultText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minHeight="90dp"
+            android:paddingTop="6dp"
+            android:text="@string/value_not_run" />
+    </LinearLayout>
+</ScrollView>

@@ -5,7 +5,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](./LICENSE)
 [![Platform](https://img.shields.io/badge/platform-Web%20%2B%20Android-blue)](https://github.com/shiroonigami23-ui/Pendant-maker)
 
-Production-focused 3D pendant design tool with guided workflow, manufacturing validation, business estimation, export utilities, and a Java-powered Android app release.
+Production-focused 3D pendant design tool with guided workflow, manufacturing validation, business estimation, export utilities, and a native Java Android app release.
 
 ## Features
 
@@ -13,10 +13,11 @@ Production-focused 3D pendant design tool with guided workflow, manufacturing va
 - Real-time manufacturability checks and print profile constraints.
 - Business tooling: cost estimate, BOM CSV export, and review link sharing.
 - PDF report export for production handoff.
-- Java-native Android bridge for:
+- Native Java Android implementation for:
   - manufacturing validation,
   - pricing estimation,
-  - native share sheet integration.
+  - workflow form controls,
+  - native share sheet summaries.
 
 ## Web development
 
@@ -27,21 +28,15 @@ npm run dev -- --host 0.0.0.0 --port 5173
 
 Open `http://localhost:5173`.
 
-## Android release build (Java)
+## Android release build (Java native)
 
-1. Build web assets and sync them into Android assets:
-
-```bash
-npm run android:prep
-```
-
-2. Configure release signing:
+1. Configure release signing:
 
 ```bash
 copy android-app\keystore.properties.example android-app\keystore.properties
 ```
 
-3. Generate signed release APK:
+2. Generate signed release APK:
 
 ```bash
 android-app\gradlew.bat -p android-app assembleRelease

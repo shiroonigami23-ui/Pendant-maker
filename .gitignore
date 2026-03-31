@@ -9,3 +9,4 @@ android-app/keystore.properties
 android-app/keystore/
 android-app/app/build/
 android-app/build/
+android-app/app/src/main/assets/web/
