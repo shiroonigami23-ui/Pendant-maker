@@ -1,6 +1,5 @@
 package com.pendantmaker.app;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.webkit.WebChromeClient;
@@ -44,6 +43,8 @@ public class MainActivity extends AppCompatActivity {
         webView.getSettings().setDomStorageEnabled(true);
         webView.getSettings().setAllowFileAccess(true);
         webView.getSettings().setAllowContentAccess(true);
+        webView.getSettings().setAllowFileAccessFromFileURLs(false);
+        webView.getSettings().setAllowUniversalAccessFromFileURLs(false);
         webView.getSettings().setBuiltInZoomControls(false);
         webView.getSettings().setDisplayZoomControls(false);
 
@@ -69,8 +70,6 @@ public class MainActivity extends AppCompatActivity {
 
             String scheme = uri.getScheme();
             if ("http".equalsIgnoreCase(scheme) || "https".equalsIgnoreCase(scheme)) {
-                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
-                startActivity(intent);
                 return true;
             }
             return false;
